@@ -1,12 +1,18 @@
-[{
+[
+  {
     "modid": "${modid}",
     "name": "${modname}",
-    "description": ""Better" quest popup for FTB Quests!",
+    "description": "\"Better\" quest popup for FTB Quests!",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "logoFile": "",
+    "logoFile": "icon.png",
     "url": "",
     "authorList": ["Katatsumuri.pan"],
     "credits": "",
-    "dependencies": []
-}]
+    "dependencies": [
+      "ftblib",
+      "ftbquests",
+      "itemfilters"
+    ]
+  }
+]

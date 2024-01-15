@@ -7,9 +7,9 @@ import kpan.bq_popup.config.core.ConfigVersionUpdateContext;
 
 public class ConfigHolder {
 
-	@Comment("Common settings(Blocks, items, etc.)")
-	@ConfigOrder(5)
-	public static Common common = new Common();
+//	@Comment("Common settings(Blocks, items, etc.)")
+//	@ConfigOrder(5)
+//	public static Common common = new Common();
 
 	public static class Common {
 
@@ -24,9 +24,9 @@ public class ConfigHolder {
 		}
 	}
 
-	@Comment("Client only settings(Rendering, resources, etc.)")
-	@ConfigOrder(3)
-	public static Client client = new Client();
+//	@Comment("Client only settings(Rendering, resources, etc.)")
+//	@ConfigOrder(3)
+//	public static Client client = new Client();
 
 	public static class Client {
 
@@ -48,15 +48,6 @@ public class ConfigHolder {
 	public static class Server {
 
 	}
-
-	@ConfigOrder(2)
-	public static long longVal = 89732434533L;
-
-	@ConfigOrder(1)
-	public static String string = "StrVal";
-
-	@ConfigOrder(4)
-	public static double ThisIsDouble = 343.123;
 
 	public static void updateVersion(ConfigVersionUpdateContext context) {
 		switch (context.loadedConfigVersion) {
