@@ -1,6 +1,6 @@
 package kpan.bq_popup.util.handlers;
 
-import kpan.bq_popup.QuestCompletePopup;
+import kpan.bq_popup.client.QuestCompletePopup;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
