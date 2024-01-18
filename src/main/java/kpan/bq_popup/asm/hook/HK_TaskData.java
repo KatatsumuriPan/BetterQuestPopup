@@ -25,7 +25,7 @@ public class HK_TaskData {
 
 	@SideOnly(Side.CLIENT)
 	private static void onSetProgressClient(TaskData<?> taskData) {
-		boolean isSelf = taskData.data == ClientQuestFile.INSTANCE.self && false;
+		boolean isSelf = taskData.data == ClientQuestFile.INSTANCE.self;
 		Task task = taskData.task;
 		Quest quest = task.quest;
 		Chapter chapter = quest.chapter;
