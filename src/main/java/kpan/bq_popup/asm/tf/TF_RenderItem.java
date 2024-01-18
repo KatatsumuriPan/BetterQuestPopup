@@ -28,7 +28,7 @@ public class TF_RenderItem {
 			public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 				MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
 				if (renderItem.isTarget(name, desc)) {
-					mv = new ReplaceInstructionsAdapter(mv, name
+					mv = new ReplaceInstructionsAdapter(mv, name + "(virtual)"
 							, Instructions.create()
 							.invokeVirtual(renderModel)
 							, Instructions.create()
@@ -36,14 +36,14 @@ public class TF_RenderItem {
 							.insn(Opcodes.SWAP)
 							.invokespecial(renderModel2)
 					).setSuccessExpectedMin(0).setSuccessExpectedMax(1);
-					mv = new ReplaceInstructionsAdapter(mv, name
+					mv = new ReplaceInstructionsAdapter(mv, name + "(special)"
 							, Instructions.create()
 							.invokespecial(renderModel)
 							, Instructions.create()
 							.invokeStatic(HOOK, "getColor", AsmUtil.composeRuntimeMethodDesc(AsmTypes.INT))
 							.insn(Opcodes.SWAP)
 							.invokespecial(renderModel2)
-					).setSuccessExpectedMin(0).setSuccessExpectedMax(1);
+					).setSuccessExpectedMin(0).setSuccessExpectedMax(2);//optifineがあると2つ
 					success();
 				}
 				return mv;
