@@ -10,6 +10,7 @@ import com.feed_the_beast.ftbquests.quest.task.Task;
 import com.feed_the_beast.ftbquests.quest.task.TaskData;
 import com.feed_the_beast.ftbquests.util.ServerQuestData;
 import kpan.bq_popup.client.DisplayedPopup;
+import kpan.bq_popup.client.OtherTeamToast;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,47 +25,65 @@ public class HK_TaskData {
 
 	@SideOnly(Side.CLIENT)
 	private static void onSetProgressClient(TaskData<?> taskData) {
-		if (taskData.data != ClientQuestFile.INSTANCE.self)
-			return;
+		boolean isSelf = taskData.data == ClientQuestFile.INSTANCE.self && false;
 		Task task = taskData.task;
 		Quest quest = task.quest;
 		Chapter chapter = quest.chapter;
 		if (!taskData.isComplete()) {
-			DisplayedPopup.remove(quest);
-			DisplayedPopup.remove(chapter);
-			DisplayedPopup.remove(chapter.file);
+			if (isSelf) {
+				DisplayedPopup.remove(quest);
+				DisplayedPopup.remove(chapter);
+				DisplayedPopup.remove(chapter.file);
+			}
 			return;
 		}
 		boolean displayPopup = !(chapter.alwaysInvisible || quest.canRepeat || !ChangeProgress.sendNotifications.get(ChangeProgress.sendUpdates));
 		boolean questComplete = quest.isComplete(taskData.data);
 		boolean displayTaskToast = quest.tasks.size() > 1 && !questComplete && !task.disableToast;
+		String teamName = taskData.data.getDisplayName().getFormattedText();
+
 		if (displayTaskToast && displayPopup) {
-			Minecraft.getMinecraft().getToastGui().add(new ToastQuestObject(task));
+			if (isSelf)
+				Minecraft.getMinecraft().getToastGui().add(new ToastQuestObject(task));
+			else
+				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(task, teamName));
 		}
 		if (!questComplete)
 			return;
 		boolean displayQuestToast = !quest.disableToast;
 		if (displayQuestToast && displayPopup) {
-			DisplayedPopup.display(quest);
+			if (isSelf)
+				DisplayedPopup.display(quest);
+			else
+				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(quest, teamName));
 		} else {
-			DisplayedPopup.add(quest);
+			if (isSelf)
+				DisplayedPopup.add(quest);
 		}
 		if (!chapter.isComplete(taskData.data))
 			return;
 		boolean displayChapterToast = !chapter.disableToast;
 		if (displayChapterToast && displayPopup) {
-			DisplayedPopup.display(chapter);
+			if (isSelf)
+				DisplayedPopup.display(chapter);
+			else
+				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(chapter, teamName));
 		} else {
-			DisplayedPopup.add(chapter);
+			if (isSelf)
+				DisplayedPopup.add(chapter);
 		}
 		QuestFile file = chapter.file;
 		if (!file.isComplete(taskData.data))
 			return;
 		boolean displayFileToast = !file.disableToast;
 		if (displayFileToast && displayPopup) {
-			DisplayedPopup.display(file);
+			if (isSelf)
+				DisplayedPopup.display(file);
+			else
+				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(file, teamName));
 		} else {
-			DisplayedPopup.add(file);
+			if (isSelf)
+				DisplayedPopup.add(file);
 		}
 	}
 }
