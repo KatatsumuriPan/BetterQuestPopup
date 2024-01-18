@@ -1,0 +1,8 @@
+version 1.1.0 :
+ Add Optifine compatibility.
+ Add and Change complete sounds and text colors.
+ Fix duplicated pop-up.
+ Show pop-up that is completed when the player is absent.
+ Show pop-up of other teams.
+version 1.0.0 :
+ First release.
