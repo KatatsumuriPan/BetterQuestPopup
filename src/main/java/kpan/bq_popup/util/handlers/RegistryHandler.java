@@ -1,6 +1,7 @@
 package kpan.bq_popup.util.handlers;
 
 import kpan.bq_popup.ModMain;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -8,7 +9,11 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 @EventBusSubscriber
 public class RegistryHandler {
 
+	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static void preInitRegistries(@SuppressWarnings("unused") FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(new RegistryHandler());
+		MinecraftForge.EVENT_BUS.register(new RenderTickHandler());
+		MinecraftForge.EVENT_BUS.register(new TickHandler());
 		ModMain.proxy.registerOnlyClient();
 	}
 
@@ -22,7 +27,7 @@ public class RegistryHandler {
 	}
 
 //	@SubscribeEvent
-//	public static void onEnchantmentRegister(RegistryEvent.Register<Enchantment> event) {
+//	public void onEnchantmentRegister(RegistryEvent.Register<Enchantment> event) {
 //	}
 
 //	@SubscribeEvent
