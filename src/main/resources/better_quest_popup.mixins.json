@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "kapn.bq_popup.mixin",
+	"compatibilityLevel": "JAVA_16",
+	"mixins": [
+		"ExampleMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
