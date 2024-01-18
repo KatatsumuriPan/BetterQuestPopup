@@ -1,8 +1,10 @@
 package kpan.bq_popup.asm.core;
 
 import kpan.bq_popup.asm.core.adapters.MixinAccessorAdapter;
+import kpan.bq_popup.asm.tf.TF_ClientQuestFile;
 import kpan.bq_popup.asm.tf.TF_MessageDisplayCompletionToast;
 import kpan.bq_popup.asm.tf.TF_RenderItem;
+import kpan.bq_popup.asm.tf.TF_TaskData;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -30,8 +32,10 @@ public class ASMTransformer implements IClassTransformer {
 			//Adapterを通して書き換え出来るようにする。
 			ClassVisitor cv = cw;
 			cv = MixinAccessorAdapter.transformAccessor(cv, transformedName);
+			cv = TF_ClientQuestFile.appendVisitor(cv, transformedName);
 			cv = TF_MessageDisplayCompletionToast.appendVisitor(cv, transformedName);
 			cv = TF_RenderItem.appendVisitor(cv, transformedName);
+			cv = TF_TaskData.appendVisitor(cv, transformedName);
 
 			if (cv == cw)
 				return bytes;

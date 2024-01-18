@@ -1,21 +1,25 @@
-package kpan.bq_popup;
+package kpan.bq_popup.client;
 
+import com.feed_the_beast.ftbquests.client.ClientQuestFile;
 import com.feed_the_beast.ftbquests.quest.Chapter;
 import com.feed_the_beast.ftbquests.quest.QuestObject;
 import kpan.bq_popup.asm.hook.HK_RenderItem;
+import kpan.bq_popup.util.SoundHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class QuestCompletePopup {
+	private static final PositionedSoundRecord QUEST_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.QUEST_COMPLETE, 1, 1);
+	private static final PositionedSoundRecord CHAPTER_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.CHAPTER_COMPLETE, 1, 1);
+	private static final PositionedSoundRecord ALL_CHAPTERS_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.ALL_CHAPTERS_COMPLETE, 1, 1);
 	private final QuestObject object;
 	private int tick = 0;
 	private QuestCompletePopup(QuestObject object) { this.object = object; }
@@ -24,18 +28,18 @@ public class QuestCompletePopup {
 		if (tick >= 100)
 			return true;
 		Minecraft mc = Minecraft.getMinecraft();
-		boolean is_important = object instanceof Chapter;
 		if (tick == 0) {
-			if (is_important)
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getRecord(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0F, 1.0F));
+			if (object instanceof Chapter)
+				mc.getSoundHandler().playSound(CHAPTER_COMPLETE);
+			else if (object instanceof ClientQuestFile)
+				mc.getSoundHandler().playSound(ALL_CHAPTERS_COMPLETE);
 			else
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getRecord(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F));
+				mc.getSoundHandler().playSound(QUEST_COMPLETE);
 		}
 		tick++;
 		return false;
 	}
 	private void render1() {
-		boolean is_important = object instanceof Chapter;
 		Minecraft mc = Minecraft.getMinecraft();
 		var res = new ScaledResolution(mc);
 		int w = res.getScaledWidth();
@@ -57,7 +61,14 @@ public class QuestCompletePopup {
 		y += 16 + 2;
 
 		String text = TextFormatting.BOLD.toString() + TextFormatting.UNDERLINE + I18n.format(object.getObjectType().getTranslationKey() + ".completed");
-		mc.fontRenderer.drawStringWithShadow(text, w / 2f - mc.fontRenderer.getStringWidth(text) / 2f, y, (is_important ? 0xFF88FF : 0xFFFF00) | (alpha << 24));
+		int color;
+		if (object instanceof Chapter)
+			color = 0xFF88FF;
+		else if (object instanceof ClientQuestFile)
+			color = 0x88FF88;
+		else
+			color = 0xFFFF00;
+		mc.fontRenderer.drawStringWithShadow(text, w / 2f - mc.fontRenderer.getStringWidth(text) / 2f, y, color | (alpha << 24));
 		y += mc.fontRenderer.FONT_HEIGHT + 2;
 		text = object.getTitle();
 		mc.fontRenderer.drawStringWithShadow(text, w / 2f - mc.fontRenderer.getStringWidth(text) / 2f, y, 0xFFFFFF | (alpha << 24));

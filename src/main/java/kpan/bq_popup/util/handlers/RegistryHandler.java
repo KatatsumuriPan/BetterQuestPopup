@@ -1,19 +1,19 @@
 package kpan.bq_popup.util.handlers;
 
 import kpan.bq_popup.ModMain;
-import net.minecraftforge.common.MinecraftForge;
+import kpan.bq_popup.util.SoundHandler;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @EventBusSubscriber
 public class RegistryHandler {
 
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static void preInitRegistries(@SuppressWarnings("unused") FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(new RegistryHandler());
-		MinecraftForge.EVENT_BUS.register(new RenderTickHandler());
-		MinecraftForge.EVENT_BUS.register(new TickHandler());
 		ModMain.proxy.registerOnlyClient();
 	}
 
@@ -38,4 +38,8 @@ public class RegistryHandler {
 //	public static void onDataSerializerRegister(RegistryEvent.Register<DataSerializerEntry> event) {
 //	}
 
+	@SubscribeEvent
+	public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
+		SoundHandler.init(event.getRegistry());
+	}
 }
