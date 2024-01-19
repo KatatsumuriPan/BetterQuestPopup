@@ -1,3 +1,5 @@
+import javax.print.attribute.standard.JobOriginatingUserName
+
 plugins {
 	id 'fabric-loom' version '1.5-SNAPSHOT'
 	id 'maven-publish'
@@ -16,6 +18,9 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven {
+		url 'https://cursemaven.com'
+	}
 }
 
 dependencies {
@@ -31,6 +36,12 @@ dependencies {
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+
+	modImplementation("curse.maven:ftb-quests-fabric-438496:4297998")
+	modImplementation("curse.maven:item-filters-309674:3769704")
+	modImplementation("curse.maven:ftb-library-fabric-438495:3553839")
+	modImplementation("curse.maven:ftb-teams-fabric-438497:3535952")
+	modImplementation("curse.maven:architectury-api-419699:4521288")
 }
 
 processResources {
@@ -76,4 +87,7 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+runClient{
+	args("--username=Katatsumuri_pan")
 }
