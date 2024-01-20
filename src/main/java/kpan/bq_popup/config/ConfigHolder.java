@@ -24,21 +24,26 @@ public class ConfigHolder {
 		}
 	}
 
-//	@Comment("Client only settings(Rendering, resources, etc.)")
-//	@ConfigOrder(3)
-//	public static Client client = new Client();
+	@Comment("Client only settings(Rendering, resources, etc.)")
+	@ConfigOrder(0)
+	public static Client client = new Client();
 
 	public static class Client {
 
-		@Name("Gui IDs")
-		@Comment("Gui ID settings")
-		public GuiIDs Gui_IDs = new GuiIDs();
+		@Name("Show Pop-up")
+		@Comment("Shows pop-ups instead of toasts.")
+		@ConfigOrder(0)
+		public boolean showPopup = true;
 
-		public static class GuiIDs {
+		@Name("Show completed task when absent")
+		@Comment("Shows completed tasks while you were absent when you log-in.")
+		@ConfigOrder(1)
+		public boolean showAbsentCompletedTask = true;
 
-			@Comment("Gui ID1")
-			public int GuiId1 = 31;
-		}
+		@Name("Show other team task")
+		@Comment("Shows completed tasks that other teams completed.")
+		@ConfigOrder(2)
+		public boolean showOtherTeamTask = true;
 
 	}
 

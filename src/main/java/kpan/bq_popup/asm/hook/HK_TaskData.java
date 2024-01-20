@@ -1,7 +1,6 @@
 package kpan.bq_popup.asm.hook;
 
 import com.feed_the_beast.ftbquests.client.ClientQuestFile;
-import com.feed_the_beast.ftbquests.gui.ToastQuestObject;
 import com.feed_the_beast.ftbquests.quest.ChangeProgress;
 import com.feed_the_beast.ftbquests.quest.Chapter;
 import com.feed_the_beast.ftbquests.quest.Quest;
@@ -9,9 +8,10 @@ import com.feed_the_beast.ftbquests.quest.QuestFile;
 import com.feed_the_beast.ftbquests.quest.task.Task;
 import com.feed_the_beast.ftbquests.quest.task.TaskData;
 import com.feed_the_beast.ftbquests.util.ServerQuestData;
+import kpan.bq_popup.client.AdvancedToastQuestObject;
 import kpan.bq_popup.client.DisplayedPopup;
 import kpan.bq_popup.client.OtherTeamToast;
-import net.minecraft.client.Minecraft;
+import kpan.bq_popup.config.ConfigHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -26,6 +26,8 @@ public class HK_TaskData {
 	@SideOnly(Side.CLIENT)
 	private static void onSetProgressClient(TaskData<?> taskData) {
 		boolean isSelf = taskData.data == ClientQuestFile.INSTANCE.self;
+		if (!ConfigHolder.client.showOtherTeamTask && !isSelf)
+			return;
 		Task task = taskData.task;
 		Quest quest = task.quest;
 		Chapter chapter = quest.chapter;
@@ -44,9 +46,9 @@ public class HK_TaskData {
 
 		if (displayTaskToast && displayPopup) {
 			if (isSelf)
-				Minecraft.getMinecraft().getToastGui().add(new ToastQuestObject(task));
+				AdvancedToastQuestObject.addToast(task);
 			else
-				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(task, teamName));
+				AdvancedToastQuestObject.addToast(new OtherTeamToast(task, teamName));
 		}
 		if (!questComplete)
 			return;
@@ -55,7 +57,7 @@ public class HK_TaskData {
 			if (isSelf)
 				DisplayedPopup.display(quest);
 			else
-				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(quest, teamName));
+				AdvancedToastQuestObject.addToast(new OtherTeamToast(quest, teamName));
 		} else {
 			if (isSelf)
 				DisplayedPopup.add(quest);
@@ -67,7 +69,7 @@ public class HK_TaskData {
 			if (isSelf)
 				DisplayedPopup.display(chapter);
 			else
-				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(chapter, teamName));
+				AdvancedToastQuestObject.addToast(new OtherTeamToast(chapter, teamName));
 		} else {
 			if (isSelf)
 				DisplayedPopup.add(chapter);
@@ -80,7 +82,7 @@ public class HK_TaskData {
 			if (isSelf)
 				DisplayedPopup.display(file);
 			else
-				Minecraft.getMinecraft().getToastGui().add(new OtherTeamToast(file, teamName));
+				AdvancedToastQuestObject.addToast(new OtherTeamToast(file, teamName));
 		} else {
 			if (isSelf)
 				DisplayedPopup.add(file);
