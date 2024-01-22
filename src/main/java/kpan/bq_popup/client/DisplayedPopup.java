@@ -1,7 +1,6 @@
 package kpan.bq_popup.client;
 
 import com.feed_the_beast.ftbquests.client.ClientQuestFile;
-import com.feed_the_beast.ftbquests.gui.ToastQuestObject;
 import com.feed_the_beast.ftbquests.quest.Chapter;
 import com.feed_the_beast.ftbquests.quest.Quest;
 import com.feed_the_beast.ftbquests.quest.QuestObject;
@@ -9,6 +8,7 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import kpan.bq_popup.ModMain;
 import kpan.bq_popup.ModTagsGenerated;
+import kpan.bq_popup.config.ConfigHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.config.Configuration.UnicodeInputStreamReader;
@@ -39,9 +39,12 @@ public class DisplayedPopup {
 	public static void display(QuestObject object) {
 		if (popupDisplayed.contains(object.id)) {
 			if (object instanceof Quest)
-				Minecraft.getMinecraft().getToastGui().add(new ToastQuestObject(object));
+				AdvancedToastQuestObject.addToast(object);
 		} else {
-			QuestCompletePopup.add(object);
+			if (ConfigHolder.client.showPopup)
+				QuestCompletePopup.add(object);
+			else
+				AdvancedToastQuestObject.addToast(object);
 			add(object);
 		}
 	}
@@ -49,17 +52,29 @@ public class DisplayedPopup {
 	public static void onLoad() {
 		ClientQuestFile questFile = ClientQuestFile.INSTANCE;
 		readFromFile();
-		if (!popupDisplayed.isEmpty()) {
+		if (!popupDisplayed.isEmpty() && ConfigHolder.client.showAbsentCompletedTask) {
 			for (Chapter chapter : questFile.chapters) {
 				for (Quest quest : chapter.quests) {
-					if (quest.isComplete(questFile.self) && !popupDisplayed.contains(quest.id))
-						QuestCompletePopup.add(quest);
+					if (quest.isComplete(questFile.self) && !popupDisplayed.contains(quest.id)) {
+						if (ConfigHolder.client.showPopup)
+							QuestCompletePopup.add(quest);
+						else
+							AdvancedToastQuestObject.addToast(quest);
+					}
 				}
-				if (chapter.isComplete(questFile.self) && !popupDisplayed.contains(chapter.id))
-					QuestCompletePopup.add(chapter);
+				if (chapter.isComplete(questFile.self) && !popupDisplayed.contains(chapter.id)) {
+					if (ConfigHolder.client.showPopup)
+						QuestCompletePopup.add(chapter);
+					else
+						AdvancedToastQuestObject.addToast(chapter);
+				}
 			}
-			if (questFile.isComplete(questFile.self) && !popupDisplayed.contains(questFile.id))
-				QuestCompletePopup.add(questFile);
+			if (questFile.isComplete(questFile.self) && !popupDisplayed.contains(questFile.id)) {
+				if (ConfigHolder.client.showPopup)
+					QuestCompletePopup.add(questFile);
+				else
+					AdvancedToastQuestObject.addToast(questFile);
+			}
 		}
 		sync(questFile);
 	}

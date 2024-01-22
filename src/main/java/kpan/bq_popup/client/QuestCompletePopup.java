@@ -4,6 +4,7 @@ import com.feed_the_beast.ftbquests.client.ClientQuestFile;
 import com.feed_the_beast.ftbquests.quest.Chapter;
 import com.feed_the_beast.ftbquests.quest.QuestObject;
 import kpan.bq_popup.asm.hook.HK_RenderItem;
+import kpan.bq_popup.client.AdvancedToastQuestObject.ToastType;
 import kpan.bq_popup.util.SoundHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -17,9 +18,9 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class QuestCompletePopup {
-	private static final PositionedSoundRecord QUEST_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.QUEST_COMPLETE, 1, 1);
-	private static final PositionedSoundRecord CHAPTER_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.CHAPTER_COMPLETE, 1, 1);
-	private static final PositionedSoundRecord ALL_CHAPTERS_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.ALL_CHAPTERS_COMPLETE, 1, 1);
+	public static final PositionedSoundRecord QUEST_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.QUEST_COMPLETE, 1, 1);
+	public static final PositionedSoundRecord CHAPTER_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.CHAPTER_COMPLETE, 1, 1);
+	public static final PositionedSoundRecord ALL_CHAPTERS_COMPLETE = PositionedSoundRecord.getRecord(SoundHandler.ALL_CHAPTERS_COMPLETE, 1, 1);
 	private final QuestObject object;
 	private int tick = 0;
 	private QuestCompletePopup(QuestObject object) { this.object = object; }
@@ -61,13 +62,8 @@ public class QuestCompletePopup {
 		y += 16 + 2;
 
 		String text = TextFormatting.BOLD.toString() + TextFormatting.UNDERLINE + I18n.format(object.getObjectType().getTranslationKey() + ".completed");
-		int color;
-		if (object instanceof Chapter)
-			color = 0xFF88FF;
-		else if (object instanceof ClientQuestFile)
-			color = 0x88FF88;
-		else
-			color = 0xFFFF00;
+
+		int color = ToastType.getToastType(object).getColor();
 		mc.fontRenderer.drawStringWithShadow(text, w / 2f - mc.fontRenderer.getStringWidth(text) / 2f, y, color | (alpha << 24));
 		y += mc.fontRenderer.FONT_HEIGHT + 2;
 		text = object.getTitle();
