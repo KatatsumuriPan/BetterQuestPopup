@@ -3,20 +3,22 @@
 	"id": "better_quest_popup",
 	"version": "${version}",
 	"name": "Better Quest Pop-up",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "\"Better\" quest pop-up for FTB Quests!",
 	"authors": [
-		"Me!"
+		"Katatsumuri.pan"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/KatatsumuriPan/BetterQuestPopup"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPL-2.1",
 	"icon": "assets/better_quest_popup/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"kpan.bq_popup.BetterQuestPopup"
+          "kpan.bq_popup.ModMain"
+		],
+		"client": [
+			"kpan.bq_popup.ModMainClient"
 		]
 	},
 	"mixins": [
