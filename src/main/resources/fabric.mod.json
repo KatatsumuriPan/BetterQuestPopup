@@ -1,41 +1,39 @@
 {
-	"schemaVersion": 1,
-	"id": "better_quest_popup",
-	"version": "${version}",
-	"name": "Better Quest Pop-up",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/better_quest_popup/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"kpan.bq_popup.BetterQuestPopup"
-		],
-		"client": [
-			"kpan.bq_popup.BetterQuestPopupClient"
-		]
-	},
-	"mixins": [
-		"better_quest_popup.mixins.json",
-		{
-			"config": "better_quest_popup.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": "~1.20.1",
-		"java": ">=17",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "better_quest_popup",
+  "version": "${version}",
+  "name": "Better Quest Pop-up",
+  "description": "\"Better\" quest pop-up for FTB Quests!",
+  "authors": [
+    "Katatsumuri.pan"
+  ],
+  "contact": {
+    "sources": "https://github.com/KatatsumuriPan/BetterQuestPopup"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/better_quest_popup/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "kpan.bq_popup.ModMain"
+    ],
+    "client": [
+      "kpan.bq_popup.ModMainClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "better_quest_popup.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }
