@@ -1,5 +1,9 @@
 # Change Log
 
+### [1.12.2-1.2.1](https://github.com/KatatsumuriPan/BetterQuestPopup/releases/tag/1.12.2-1.2.1) - 2024-02-20
+
+- Fix resetting config bug.
+
 ### [1.12.2-1.2.0](https://github.com/KatatsumuriPan/BetterQuestPopup/releases/tag/1.12.2-1.2.0) - 2024-01-20
 
 - Add configs.
