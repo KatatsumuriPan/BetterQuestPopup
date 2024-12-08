@@ -24,9 +24,9 @@ public class RenderTickHandler {
 
 				QuestCompletePopup.render();
 
-				GL11.glMatrixMode(GL11.GL_MODELVIEW);
-				GL11.glPopMatrix();
 				GL11.glMatrixMode(GL11.GL_PROJECTION);
+				GL11.glPopMatrix();
+				GL11.glMatrixMode(GL11.GL_MODELVIEW);
 				GL11.glPopMatrix();
 			} catch (Exception e) {
 				e.printStackTrace();
