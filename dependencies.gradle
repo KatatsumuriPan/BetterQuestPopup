@@ -25,4 +25,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:ftb-quests-forge-289412:3156637")
     implementation rfg.deobf("curse.maven:item-filters-309674:3003364")
     implementation rfg.deobf("curse.maven:ftb-library-legacy-forge-237167:2985811")
+
+    runtimeOnly rfg.deobf("curse.maven:ingame-info-xml-225604:2489566")
+    runtimeOnly rfg.deobf("curse.maven:lunatriuscore-225605:2489549")
 }
