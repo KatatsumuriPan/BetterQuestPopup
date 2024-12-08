@@ -1,5 +1,10 @@
 # Change Log
 
+### [1.12.2-forge-1.2.2](https://github.com/KatatsumuriPan/BetterQuestPopup/releases/tag/1.12.2-forge-1.2.2) - 2024-12-08
+
+- Fix bug that other mod's HUDs are not rendered.
+- Fix rendering quest icon of grass block.
+
 ### [1.12.2-forge-1.2.1](https://github.com/KatatsumuriPan/BetterQuestPopup/releases/tag/1.12.2-forge-1.2.1) - 2024-02-20
 
 - Fix resetting config bug.
