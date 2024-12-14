@@ -65,25 +65,8 @@ public class TF_RenderItem {
                             .ldcInsn(0xFF00_0000)
                             .insn(Opcodes.IOR)
                             , Instructions.create()
-                            //アルファ部分を削除
-                            .ldcInsn(0x00FF_FFFF)
-                            .insn(Opcodes.IAND)
-                            //colorのアルファ
                             .iload(3)
-                            .intInsn(OpcodeInt.BIPUSH,24)
-                            .insn(Opcodes.IUSHR)
-                            //kのアルファ
-                            .iload(9)
-                            .intInsn(OpcodeInt.BIPUSH,24)
-                            .insn(Opcodes.IUSHR)
-                            //colorとkの掛け算
-                            .insn(Opcodes.IMUL)
-                            //正規化兼0xFF00_0000部分へ移動
-                            .ldcInsn(65794)
-                            .insn(Opcodes.IMUL)
-                            .ldcInsn(0xFF00_0000)
-                            .insn(Opcodes.IAND)
-                            .insn(Opcodes.IOR)
+                            .invokeStatic(HOOK, "applyAlpha", AsmUtil.composeRuntimeMethodDesc(AsmTypes.INT, AsmTypes.INT, AsmTypes.INT))
                     );
                     success();
                 }
