@@ -26,6 +26,9 @@ dependencies {
     implementation rfg.deobf("curse.maven:item-filters-309674:3003364")
     implementation rfg.deobf("curse.maven:ftb-library-legacy-forge-237167:2985811")
 
+    implementation rfg.deobf("curse.maven:gregtech-ce-unofficial-557242:4965457")
+    runtimeOnly rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848")
+
     runtimeOnly rfg.deobf("curse.maven:ingame-info-xml-225604:2489566")
     runtimeOnly rfg.deobf("curse.maven:lunatriuscore-225605:2489549")
 }

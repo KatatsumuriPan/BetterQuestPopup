@@ -1,5 +1,9 @@
 # Change Log
 
+### [1.12.2-forge-1.2.3](https://github.com/KatatsumuriPan/BetterQuestPopup/releases/tag/1.12.2-forge-1.2.3) - 2024-12-14
+
+- Fix rendering item with tint.
+
 ### [1.12.2-forge-1.2.2](https://github.com/KatatsumuriPan/BetterQuestPopup/releases/tag/1.12.2-forge-1.2.2) - 2024-12-08
 
 - Fix bug that other mod's HUDs are not rendered.
