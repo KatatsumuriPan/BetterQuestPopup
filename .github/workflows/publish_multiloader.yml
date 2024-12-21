@@ -1,5 +1,5 @@
 # Publishes built jars to distribution platforms
-name: Publish
+name: Publish(MultiLoader)
 
 on:
   workflow_dispatch:

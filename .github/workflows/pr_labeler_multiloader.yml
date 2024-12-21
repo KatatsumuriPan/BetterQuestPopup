@@ -1,5 +1,5 @@
 # Add labels when PR opened.
-name: PR_Labeler
+name: PR_Labeler(MultiLoader)
 
 on: pull_request
 
