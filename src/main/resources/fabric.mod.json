@@ -10,7 +10,7 @@
   "contact": {
     "sources": "https://github.com/KatatsumuriPan/BetterQuestPopup"
   },
-  "license": "CC0-1.0",
+  "license": "LGPL-2.1",
   "icon": "assets/better_quest_popup/icon.png",
   "environment": "*",
   "entrypoints": {
