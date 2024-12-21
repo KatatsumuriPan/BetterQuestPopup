@@ -2,7 +2,7 @@ package kpan.bq_popup.fabric;
 
 import net.fabricmc.api.ModInitializer;
 
-import kpan.bq_popup.ExampleMod;
+import kpan.bq_popup.ModMain;
 
 public final class ExampleModFabric implements ModInitializer {
     @Override
@@ -12,6 +12,6 @@ public final class ExampleModFabric implements ModInitializer {
         // Proceed with mild caution.
 
         // Run our common setup.
-        ExampleMod.init();
+        ModMain.init();
     }
 }

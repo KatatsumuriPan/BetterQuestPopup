@@ -1,17 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "LGPL-2.1"
 
 [[mods]]
 modId = "better_quest_popup"
 version = "${version}"
 displayName = "Better Quest Pop-up"
-authors = "Me!"
+authors = "Katatsumuri.pan"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+"Better" quest pop-up for FTB Quests!
 '''
-#logoFile = ""
+logoFile = "assets/better_quest_popup/icon.png"
 
 [[dependencies.better_quest_popup]]
 modId = "forge"
@@ -30,6 +30,6 @@ side = "BOTH"
 [[dependencies.better_quest_popup]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
