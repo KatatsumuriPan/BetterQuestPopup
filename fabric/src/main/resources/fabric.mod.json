@@ -3,15 +3,14 @@
   "id": "better_quest_popup",
   "version": "${version}",
   "name": "Better Quest Pop-up",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "\"Better\" quest pop-up for FTB Quests!",
   "authors": [
-    "Me!"
+    "Katatsumuri.pan"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/KatatsumuriPan/BetterQuestPopup"
   },
-  "license": "CC0-1.0",
+  "license": "LGPL-2.1",
   "icon": "assets/better_quest_popup/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -23,13 +22,16 @@
     ]
   },
   "mixins": [
-    "better_quest_popup.mixins.json"
+    {
+      "config": "better_quest_popup.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "fabricloader": ">=0.16.9",
     "minecraft": "~1.20.1",
     "java": ">=17",
-    "architectury": ">=9.2.14",
+    "architectury": ">=9",
     "fabric-api": "*"
   },
   "suggests": {
