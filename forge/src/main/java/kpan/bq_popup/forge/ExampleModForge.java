@@ -8,6 +8,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ModReference.MOD_ID)
 public final class ExampleModForge {
+    @SuppressWarnings("removal")
+    public ExampleModForge() {
+        this(FMLJavaModLoadingContext.get());// 警告回避
+    }
     public ExampleModForge(FMLJavaModLoadingContext fmlJavaModLoadingContext) {
         // Submit our event bus to let Architectury API register our content on the right time.
         EventBuses.registerModEventBus(ModReference.MOD_ID, fmlJavaModLoadingContext.getModEventBus());
