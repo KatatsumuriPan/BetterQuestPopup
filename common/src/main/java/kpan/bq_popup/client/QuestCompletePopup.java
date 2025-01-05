@@ -8,9 +8,9 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import kpan.bq_popup.SoundHandler;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -38,7 +38,7 @@ public class QuestCompletePopup {
         tick++;
         return false;
     }
-    private void render1(DrawContext drawContext) {
+    private void render1(MatrixStack drawContext) {
         MinecraftClient mc = MinecraftClient.getInstance();
         var res = mc.getWindow();
         int w = res.getScaledWidth();
@@ -57,7 +57,8 @@ public class QuestCompletePopup {
         object.getIcon().draw(drawContext, w / 2 - 8, y, 16, 16);
         y += 16 + 2;
 
-        Text text = ((MutableText) object.getObjectType().getCompletedMessage()).formatted(Formatting.BOLD, Formatting.UNDERLINE);
+        Text text = Text.translatable(object.getObjectType().translationKey + ".completed")
+                .formatted(Formatting.BOLD, Formatting.UNDERLINE);
         int color;
         if (object instanceof Chapter)
             color = 0xFF88FF;
@@ -65,17 +66,17 @@ public class QuestCompletePopup {
             color = 0x88FF88;
         else
             color = 0xFFFF00;
-        drawContext.drawTextWithShadow(mc.textRenderer, text, (int) (w / 2f - mc.textRenderer.getWidth(text) / 2f), y, color | (alpha << 24));
+        mc.textRenderer.drawWithShadow(drawContext, text, w / 2f - mc.textRenderer.getWidth(text) / 2f, y, color | (alpha << 24));
         y += mc.textRenderer.fontHeight + 2;
         text = object.getTitle();
-        drawContext.drawTextWithShadow(mc.textRenderer, text, (int) (w / 2f - mc.textRenderer.getWidth(text) / 2f), y, 0xFF_FFFF | (alpha << 24));
+        mc.textRenderer.drawWithShadow(drawContext, text, w / 2f - mc.textRenderer.getWidth(text) / 2f, y, 0xFFFFFF | (alpha << 24));
     }
 
     private static final Queue<QuestCompletePopup> TITLES = new ArrayDeque<>();
     public static void add(QuestObject object) {
         TITLES.add(new QuestCompletePopup(object));
     }
-    public static void render(DrawContext drawContext) {
+    public static void render(MatrixStack drawContext) {
         if (TITLES.isEmpty())
             return;
         MinecraftClient mc = MinecraftClient.getInstance();

@@ -1,10 +1,9 @@
 package kpan.bq_popup;
 
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class SoundHandler {
     public static final Identifier QUEST_COMPLETE_ID = new Identifier(ModReference.MOD_ID, "quest_complete");
@@ -15,12 +14,12 @@ public class SoundHandler {
     public static final SoundEvent ALL_CHAPTERS_COMPLETE = createSoundEvent(ALL_CHAPTERS_COMPLETE_ID);
 
     public static void init() {
-        Registry.register(Registries.SOUND_EVENT, QUEST_COMPLETE_ID, QUEST_COMPLETE);
-        Registry.register(Registries.SOUND_EVENT, CHAPTER_COMPLETE_ID, CHAPTER_COMPLETE);
-        Registry.register(Registries.SOUND_EVENT, ALL_CHAPTERS_COMPLETE_ID, ALL_CHAPTERS_COMPLETE);
+        Registry.register(Registry.SOUND_EVENT, QUEST_COMPLETE_ID, QUEST_COMPLETE);
+        Registry.register(Registry.SOUND_EVENT, CHAPTER_COMPLETE_ID, CHAPTER_COMPLETE);
+        Registry.register(Registry.SOUND_EVENT, ALL_CHAPTERS_COMPLETE_ID, ALL_CHAPTERS_COMPLETE);
     }
 
     private static SoundEvent createSoundEvent(Identifier soundId) {
-        return SoundEvent.of(soundId);
+        return new SoundEvent(soundId);
     }
 }
