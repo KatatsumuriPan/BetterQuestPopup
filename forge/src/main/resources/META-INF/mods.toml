@@ -11,7 +11,6 @@ authors = "Katatsumuri.pan"
 description = '''
 "Better" quest pop-up for FTB Quests!
 '''
-logoFile = "assets/better_quest_popup/icon.png"
 
 [[dependencies.better_quest_popup]]
 modId = "forge"
