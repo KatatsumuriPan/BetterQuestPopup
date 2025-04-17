@@ -3,6 +3,7 @@ package kpan.bq_popup.forge;
 import dev.architectury.platform.forge.EventBuses;
 import kpan.bq_popup.ModMain;
 import kpan.bq_popup.ModReference;
+import kpan.bq_popup.forge.config.ModConfigHandlerForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -16,7 +17,11 @@ public final class ModMainForge {
         // Submit our event bus to let Architectury API register our content on the right time.
         EventBuses.registerModEventBus(ModReference.MOD_ID, fmlJavaModLoadingContext.getModEventBus());
 
+        // Configをロード
+        ModConfigHandlerForge.init(fmlJavaModLoadingContext);
+
         // Run our common setup.
         ModMain.init();
+
     }
 }
