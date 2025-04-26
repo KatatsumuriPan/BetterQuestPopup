@@ -15,10 +15,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "kpan.bq_popup.fabric.ExampleModFabric"
+      "kpan.bq_popup.fabric.ModMainFabric"
+    ],
+    "modmenu": [
+      "kpan.bq_popup.fabric.config.ModMenuIntegration"
     ],
     "client": [
-      "kpan.bq_popup.fabric.client.ExampleModFabricClient"
+      "kpan.bq_popup.fabric.client.ModMainFabricClient"
     ]
   },
   "mixins": [

@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbquests.quest.QuestObject;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import kpan.bq_popup.ModMain;
 import kpan.bq_popup.SoundHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -43,7 +44,13 @@ public class QuestCompletePopup {
         var res = mc.getWindow();
         int w = res.getScaledWidth();
         int h = res.getScaledHeight();
-        int y = h / 3;
+        int iconSizePx = ModMain.INSTANCE.getIconSizePx();
+        double centerX = PositionExpression.parseExpression(w, iconSizePx, ModMain.INSTANCE.getCenterX());
+        double centerY = PositionExpression.parseExpression(h, iconSizePx, ModMain.INSTANCE.getCenterY());
+        if (Double.isNaN(centerX))
+            centerX = 0;
+        if (Double.isNaN(centerY))
+            centerY = 0;
         float alphaf;
         if (tick < 20)
             alphaf = tick / 20f;
@@ -54,8 +61,7 @@ public class QuestCompletePopup {
         int alpha = Math.max((int) (alphaf * 255), 16);
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-        object.getIcon().draw(drawContext, w / 2 - 8, y, 16, 16);
-        y += 16 + 2;
+        object.getIcon().draw(drawContext, (int) (centerX - iconSizePx / 2f), (int) (centerY - iconSizePx - 1), iconSizePx, iconSizePx);
 
         Text text = ((MutableText) object.getObjectType().getCompletedMessage()).formatted(Formatting.BOLD, Formatting.UNDERLINE);
         int color;
@@ -65,10 +71,9 @@ public class QuestCompletePopup {
             color = 0x88FF88;
         else
             color = 0xFFFF00;
-        drawContext.drawTextWithShadow(mc.textRenderer, text, (int) (w / 2f - mc.textRenderer.getWidth(text) / 2f), y, color | (alpha << 24));
-        y += mc.textRenderer.fontHeight + 2;
+        drawContext.drawTextWithShadow(mc.textRenderer, text, (int) (centerX - mc.textRenderer.getWidth(text) / 2f), (int) centerY, color | (alpha << 24));
         text = object.getTitle();
-        drawContext.drawTextWithShadow(mc.textRenderer, text, (int) (w / 2f - mc.textRenderer.getWidth(text) / 2f), y, 0xFF_FFFF | (alpha << 24));
+        drawContext.drawTextWithShadow(mc.textRenderer, text, (int) (centerX - mc.textRenderer.getWidth(text) / 2f), (int) (centerY + mc.textRenderer.fontHeight + 2), 0xFF_FFFF | (alpha << 24));
     }
 
     private static final Queue<QuestCompletePopup> TITLES = new ArrayDeque<>();
@@ -95,4 +100,5 @@ public class QuestCompletePopup {
         if (title.tick())
             TITLES.remove();
     }
+
 }
