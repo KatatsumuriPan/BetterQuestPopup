@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
+loaderVersion = "[43,)"
 #issueTrackerURL = ""
 license = "LGPL-2.1"
 
@@ -11,25 +11,24 @@ authors = "Katatsumuri.pan"
 description = '''
 "Better" quest pop-up for FTB Quests!
 '''
-logoFile = "assets/better_quest_popup/icon.png"
 
 [[dependencies.better_quest_popup]]
 modId = "forge"
 mandatory = true
-versionRange = "[47,)"
+versionRange = "[43,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.better_quest_popup]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.1,)"
+versionRange = "[1.19.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.better_quest_popup]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9,)"
+versionRange = "[6,)"
 ordering = "AFTER"
 side = "BOTH"

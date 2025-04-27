@@ -1,7 +1,7 @@
 package kpan.bq_popup.client;
 
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
-import dev.ftb.mods.ftbquests.client.gui.ToastQuestObject;
+import dev.ftb.mods.ftbquests.gui.ToastQuestObject;
 import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbquests.quest.ChapterGroup;
 import dev.ftb.mods.ftbquests.quest.Quest;
@@ -49,9 +49,9 @@ public class DisplayedPopup {
         ClientQuestFile questFile = ClientQuestFile.INSTANCE;
         readFromFile();
         if (!popupDisplayed.isEmpty()) {
-            TeamData teamData = questFile.selfTeamData;
-            for (ChapterGroup chapterGroup : questFile.getChapterGroups()) {
-                for (Chapter chapter : chapterGroup.getChapters()) {
+            TeamData teamData = questFile.self;
+            for (ChapterGroup chapterGroup : questFile.chapterGroups) {
+                for (Chapter chapter : chapterGroup.chapters) {
                     for (Quest quest : chapter.getQuests()) {
                         if (teamData.isCompleted(quest) && !popupDisplayed.contains(quest.id))
                             QuestCompletePopup.add(quest);
@@ -68,9 +68,9 @@ public class DisplayedPopup {
 
     public static void sync(ClientQuestFile questFile) {
         popupDisplayed.clear();
-        TeamData teamData = questFile.selfTeamData;
-        for (ChapterGroup chapterGroup : questFile.getChapterGroups()) {
-            for (Chapter chapter : chapterGroup.getChapters()) {
+        TeamData teamData = questFile.self;
+        for (ChapterGroup chapterGroup : questFile.chapterGroups) {
+            for (Chapter chapter : chapterGroup.chapters) {
                 for (Quest quest : chapter.getQuests()) {
                     if (teamData.isCompleted(quest))
                         popupDisplayed.add(quest.id);

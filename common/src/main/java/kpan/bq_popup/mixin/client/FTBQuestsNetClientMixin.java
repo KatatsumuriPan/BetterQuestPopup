@@ -2,7 +2,7 @@ package kpan.bq_popup.mixin.client;
 
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
 import dev.ftb.mods.ftbquests.client.FTBQuestsNetClient;
-import dev.ftb.mods.ftbquests.client.gui.ToastQuestObject;
+import dev.ftb.mods.ftbquests.gui.ToastQuestObject;
 import dev.ftb.mods.ftbquests.quest.QuestObject;
 import dev.ftb.mods.ftbquests.quest.TeamData;
 import dev.ftb.mods.ftbquests.quest.task.Task;
@@ -22,7 +22,7 @@ public class FTBQuestsNetClientMixin {
      * @reason to show pop-up
      */
     @Overwrite(remap = false)
-    public static void displayCompletionToast(long id) {
+    public void displayCompletionToast(long id) {
         QuestObject object = ClientQuestFile.INSTANCE.get(id);
         if (object != null) {
             if (object instanceof Task)
@@ -31,15 +31,13 @@ public class FTBQuestsNetClientMixin {
                 QuestCompletePopup.add(object);
         }
 
-        ClientQuestFile.INSTANCE.getQuestScreen().ifPresent(screen -> {
-            screen.refreshQuestPanel();
-            screen.refreshChapterPanel();
-            screen.refreshViewQuestPanel();
-        });
+        ClientQuestFile.INSTANCE.questScreen.questPanel.refreshWidgets();
+        ClientQuestFile.INSTANCE.questScreen.chapterPanel.refreshWidgets();
+        ClientQuestFile.INSTANCE.questScreen.viewQuestPanel.refreshWidgets();
     }
 
     @Inject(at = @At("RETURN"), method = "syncTeamData", remap = false)
-    private static void syncTeamData(boolean self, TeamData data, CallbackInfo ci) {
+    private void syncTeamData(boolean self, TeamData data, CallbackInfo ci) {
         DisplayedPopup.onLoad();
     }
 }

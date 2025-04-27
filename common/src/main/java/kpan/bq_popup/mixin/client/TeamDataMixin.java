@@ -1,11 +1,7 @@
 package kpan.bq_popup.mixin.client;
 
-import dev.ftb.mods.ftbquests.api.QuestFile;
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
-import dev.ftb.mods.ftbquests.quest.Chapter;
-import dev.ftb.mods.ftbquests.quest.Quest;
-import dev.ftb.mods.ftbquests.quest.QuestObject;
-import dev.ftb.mods.ftbquests.quest.TeamData;
+import dev.ftb.mods.ftbquests.quest.*;
 import dev.ftb.mods.ftbquests.quest.task.Task;
 import java.util.Date;
 import kpan.bq_popup.client.DisplayedPopup;
@@ -24,11 +20,11 @@ public class TeamDataMixin {
         if (!cir.getReturnValueZ())
             return;
         TeamData teamData = (TeamData) (Object) this;
-        if (teamData.getFile().isServerSide())
+        if (teamData.file.isServerSide())
             return;
-        boolean isSelf = ClientQuestFile.INSTANCE != null && teamData == ClientQuestFile.INSTANCE.selfTeamData;
-        QuestObject object = teamData.getFile().get(id);
-        String teamName = teamData.getName();
+        boolean isSelf = ClientQuestFile.INSTANCE != null && teamData == ClientQuestFile.INSTANCE.self;
+        QuestObject object = teamData.file.get(id);
+        String teamName = teamData.name;
         if (!teamData.isCompleted(object)) {
             if (isSelf) {
                 DisplayedPopup.remove(object);
@@ -36,14 +32,14 @@ public class TeamDataMixin {
             return;
         }
         if (object instanceof Task task) {
-            boolean displayPopup = !task.getQuest().getChapter().isAlwaysInvisible();// QuestObjectBase.sendNotifications.get(true)はサーバー限定なので取得不可
-            boolean displayTaskToast = task.getQuest().getTasks().size() > 1 && !teamData.isCompleted(task.getQuest()) && !getDisableToast(task);
+            boolean displayPopup = !task.quest.chapter.alwaysInvisible;// QuestObjectBase.sendNotifications.get(true)はサーバー限定なので取得不可
+            boolean displayTaskToast = task.quest.tasks.size() > 1 && !teamData.isCompleted(task.quest) && !getDisableToast(task);
             if (displayTaskToast && displayPopup) {
                 if (!isSelf)
                     MinecraftClient.getInstance().getToastManager().add(new OtherTeamToast(task, teamName));
             }
         } else if (object instanceof Quest quest) {
-            boolean displayPopup = !quest.getChapter().isAlwaysInvisible();
+            boolean displayPopup = !quest.getChapter().alwaysInvisible;
             boolean displayQuestToast = !getDisableToast(quest);
             if (displayQuestToast && displayPopup) {
                 if (isSelf)
@@ -55,7 +51,7 @@ public class TeamDataMixin {
                     DisplayedPopup.add(quest);
             }
         } else if (object instanceof Chapter chapter) {
-            boolean displayPopup = !chapter.isAlwaysInvisible();
+            boolean displayPopup = !chapter.alwaysInvisible;
             boolean displayChapterToast = !getDisableToast(chapter);
             if (displayChapterToast && displayPopup) {
                 if (isSelf)
